@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX 5   // صغير لحتى يبين overflow
+#define MAX 5   
 
 typedef struct {
     char data[MAX];
@@ -10,24 +10,20 @@ typedef struct {
     int used;
 } Buffer;
 
-// تهيئة
 void setup(Buffer *b) {
     b->front = 0;
     b->rear = 0;
     b->used = 0;
 }
 
-// هل فاضي؟
 int isEmpty(Buffer *b) {
     return b->used == 0;
 }
 
-// هل مليان؟
 int isFull(Buffer *b) {
     return b->used == MAX;
 }
 
-// إدخال
 int push(Buffer *b, char c) {
     if (isFull(b)) {
         printf("Overflow!\n");
@@ -35,13 +31,12 @@ int push(Buffer *b, char c) {
     }
 
     b->data[b->rear] = c;
-    b->rear = (b->rear + 1) % MAX; // حركة دائرية
+    b->rear = (b->rear + 1) % MAX; 
     b->used++;
 
     return 1;
 }
 
-// إخراج
 char pop(Buffer *b) {
     if (isEmpty(b)) {
         printf("Underflow!\n");
@@ -65,20 +60,17 @@ int main() {
     printf("Enter name: ");
     scanf("%49s", input);
 
-    // إضافة النص المطلوب
     strcat(input, "CE-ESY");
 
-    // تخزين الأحرف
     int len = strlen(input);
     for (int i = 0; i < len; i++) {
         if (!push(&b, input[i])) {
-            break; // وقف إذا امتلأ
+            break;
         }
     }
 
     printf("Output: ");
 
-    // قراءة وطباعة
     while (!isEmpty(&b)) {
         char ch = pop(&b);
         printf("%c", ch);
@@ -86,7 +78,6 @@ int main() {
 
     printf("\n");
 
-    // تأكيد
     if (isEmpty(&b)) {
         printf("Buffer empty now\n");
     }
